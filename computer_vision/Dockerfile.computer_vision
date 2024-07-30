@@ -1,0 +1,11 @@
+FROM continuumio/anaconda3:main
+
+USER root
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+
+COPY conda_env.yml /root/conda_env.yml
+
+RUN conda env create -f /root/conda_env.yml
