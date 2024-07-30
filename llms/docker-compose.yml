@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  container:
+    image: custom_ollama
+    container_name: as2_ollama
+    command: tail -F anything 
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ~/.Xauthority:/root/.Xauthority:ro
+      - ~/.tmux:/home/user/.tmux:ro
+      - ~/.tmux.conf:/home/user/.tmux.conf:ro
+      - ~/.config/nvim:/home/user/.config/nvim:ro
+      - ~/.config/coc:/home/user/.config/coc:ro
+      - ~/.local/share/nvim/:/home/user/.local/share/nvim/:ro
+      - ~/.shh:/home/user/.ssh:ro
+      - ~/llm-workspace:/root/llm-workspace
+    network_mode: "host"
