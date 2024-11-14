@@ -2,9 +2,9 @@ version: '3.3'
 services:
   container:
     image: custom_ollama
-    container_name: as2_ollama
-    command: ollama serve && ollama pull llama3.1 && tail -f /dev/null
-    # command: tail -f /dev/null   
+    container_name: ros-llm
+    # command: ollama serve && ollama pull llama3.1 && tail -f /dev/null
+    command: tail -f /dev/null   
     environment:
       DISPLAY: $DISPLAY
     volumes:
@@ -15,6 +15,7 @@ services:
       - ~/.config/nvim:/home/user/.config/nvim:ro
       - ~/.config/coc:/home/user/.config/coc:ro
       - ~/.local/share/nvim/:/home/user/.local/share/nvim/:ro
-      - ~/.shh:/home/user/.ssh:ro
-      - ~/as2_llms:/root/as2_llms
+      # - ~/.shh:/home/user/.ssh:ro
+      - ~/ROS-LLM:/root/ROS-LLM
+      - /dev/snd:/dev/snd:ro
     network_mode: "host"
