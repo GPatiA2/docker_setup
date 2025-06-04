@@ -63,7 +63,8 @@ apt-get update && apt-get install -y \
 # Python basics
 RUN --mount=type=cache,target=/var/cache/apt \
 apt-get update && apt-get install -y \
-        python3-pip \
+        python3\
+        python3-pip\
         python3-pybind11 \
         python3-pytest \
         python3-pytest-repeat \
@@ -217,21 +218,21 @@ RUN rm -rf log # remove log folder
 RUN pip3 install colcon-lcov-result cpplint cmakelint
 RUN pip3 install PySimpleGUI-4-foss
 
-RUN mkdir -p /root/aerostack2_ws/src/
-WORKDIR /root/aerostack2_ws/src/
-RUN git clone https://github.com/aerostack2/aerostack2.git -b main
+# RUN mkdir -p /root/aerostack2_ws/src/
+# WORKDIR /root/aerostack2_ws/src/
+# RUN git clone https://github.com/aerostack2/aerostack2.git -b main
 
-WORKDIR /root/aerostack2_ws
+# WORKDIR /root/aerostack2_ws
 RUN rosdep init
 RUN rosdep update
 RUN rosdep fix-permissions
 ENV ROS_DISTRO=humble
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && rosdep install --from-paths src --ignore-src -r -y
+# RUN . /opt/ros/$ROS_DISTRO/setup.sh && rosdep install --from-paths src --ignore-src -r -y
 
 # RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
-RUN echo 'export AEROSTACK2_PATH=/root/aerostack2_ws/src/aerostack2' >> ~/.bashrc
+RUN echo 'export AEROSTACK2_PATH=/root/aerostack2_ws/src/' >> ~/.bashrc
 RUN echo 'source $AEROSTACK2_PATH/as2_cli/setup_env.bash' >> ~/.bashrc
 
 
@@ -275,7 +276,7 @@ RUN apt update && apt install ros-humble-ros-gzharmonic -y
 
 
 # Install dependencies
-RUN python3 -m pip install -U numpy==1.26
+RUN python3 -m pip install -U numpy
 RUN python3 -m pip install -U lightning
 RUN python3 -m pip install -U scikit-image
 RUN python3 -m pip install -U rosbags
@@ -283,18 +284,21 @@ RUN python3 -m pip install -U rosbags-image
 RUN python3 -m pip install -U tensorboard
 RUN python3 -m pip install -U labelbox
 RUN python3 -m pip install -U natsort
-
-
-RUN apt remove ros-humble-librealsense2 -y
-RUN git clone https://github.com/IntelRealSense/librealsense.git -b v2.50.0 && cd librealsense && mkdir build && cd build && cmake .. -DFORCE_RSUSB_BACKEND=1 && make -j12 && sudo make install
 RUN mkdir -p /etc/udev/rules.d
-RUN cp ~/librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/99-realsense-libusb.rules
+
 
 RUN apt install ros-humble-plotjuggler-ros ripgrep xclip ros-humble-rqt-tf-tree -y
 
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN touch /root/.mybashrc
+RUN echo "source /root/.mybashrc" >> /root/.bashrc
+
+RUN export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+RUN sudo apt install ros-humble-rmw-cyclonedds-cpp -y
+RUN python3 -m pip install -U mypy
 ENTRYPOINT ["bash", "/entrypoint.sh"]
+
+
 
 
 

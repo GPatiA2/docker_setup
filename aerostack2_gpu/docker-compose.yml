@@ -35,9 +35,11 @@ services:
       # git
       - ~/.gitconfig:/root/.gitconfig_local
       # working dirs
-      - ~/cs_workspace:/root/cs_workspace
+      - ~/emlanding_ws:/root/emlanding_ws
+      - ~/docker_setup/aerostack2_gpu/.mybashrc:/root/.mybashrc
       # dev
       - /dev:/dev:rw
-      # rosbag
+      # as2
+      - ~/aerostack2_ws:/root/aerostack2_ws/
     network_mode: "host"
     command: tail -f /dev/null
