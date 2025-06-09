@@ -1,0 +1,4 @@
+source /root/aerostack2_ws/install/setup.bash
+source /root/emlanding_ws/install/setup.bash
+
+
