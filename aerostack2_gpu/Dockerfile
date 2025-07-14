@@ -280,7 +280,7 @@ RUN sudo apt-get install -y gz-harmonic
 
 # Install ros-gazebo dependencies
 #RUN apt update -y 
-#RUN apt-get install -y ros-humble-ros-gz
+RUN apt-get install -y ros-humble-ros-gz
 # Install dependencies
 RUN python3 -m pip install -U numpy
 RUN python3 -m pip install -U lightning

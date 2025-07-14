@@ -1,4 +1,12 @@
 source /root/aerostack2_ws/install/setup.bash
-source /root/emlanding_ws/install/setup.bash
 
-
+IFS=':' read -ra PATH_ARRAY <<< "$WORKSPACES"
+for path in "${PATH_ARRAY[@]}"; do
+  setup_file="/root/$path/install/setup.bash"
+  if [ -f "$setup_file" ]; then
+    echo "Sourcing $setup_file"
+    source "$setup_file"
+  else
+    echo "File not found: $setup_file"
+  fi
+done
