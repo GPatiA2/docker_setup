@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: as2_gpu
+    container_name: imav25
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: $XAUTHORITY
@@ -36,8 +36,8 @@ services:
       # git
       - ~/.gitconfig:/root/.gitconfig_local
       # working dirs
-      - ~/emlanding_ws:/root/emlanding_ws
       - ~/docker_setup/aerostack2_gpu/.mybashrc:/root/.mybashrc
+      - ~/project_IMAV25:/root/project_IMAV25
       # dev
       - /dev:/dev:rw
       # as2

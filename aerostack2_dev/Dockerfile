@@ -174,7 +174,6 @@ RUN mkdir -p /opt/nvidia/isaac_ros_dev_base && dpkg-query -W | sort > /opt/nvidi
 ## FROM HERE IS THE SAME AS THE ORIGINAL DOCKERFILE start
 
 
-RUN rm -r /var/lib/apt/lists/*
 RUN apt update && apt install locales -y
 RUN locale-gen en_US en_US.UTF-8
 RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
@@ -191,6 +190,8 @@ RUN apt update
 RUN apt install ros-humble-desktop  ros-dev-tools -y
 
 # AS2 
+
+
 RUN apt-get install python3-rosdep  \
                 python3-pip     \
                 python3-colcon-common-extensions \
@@ -217,18 +218,18 @@ RUN rm -rf log # remove log folder
 RUN pip3 install colcon-lcov-result cpplint cmakelint
 RUN pip3 install PySimpleGUI-4-foss
 
-RUN mkdir -p /root/aerostack2_ws/src/
-WORKDIR /root/aerostack2_ws/src/
-RUN git clone https://github.com/aerostack2/aerostack2.git -b main
+# RUN mkdir -p /root/aerostack2_ws/src/
+# WORKDIR /root/aerostack2_ws/src/
+# RUN git clone https://github.com/aerostack2/aerostack2.git -b main
 
-WORKDIR /root/aerostack2_ws
+# WORKDIR /root/aerostack2_ws
 RUN rosdep init
 RUN rosdep update
 RUN rosdep fix-permissions
 ENV ROS_DISTRO=humble
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && rosdep install --from-paths src --ignore-src -r -y
+# RUN . /opt/ros/$ROS_DISTRO/setup.sh && rosdep install --from-paths src --ignore-src -r -y
 
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+# RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 RUN echo 'export AEROSTACK2_PATH=/root/aerostack2_ws/src/' >> ~/.bashrc
@@ -265,22 +266,15 @@ RUN apt remove ignition* -y
 RUN apt autoremove -y
 
 # Install Gazebo Harmonic
-
-RUN rm -r /var/lib/apt/lists/*
-RUN apt-get update
-RUN apt-get install -y curl lsb-release gnupg
-#RUN apt-get install -y lsb-release wget gnupg && apt-get update
-#RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
-#RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
-#RUN apt-get update && apt-get install -y -q --fix-missing gz-harmonic
-RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
-RUN sudo apt-get update
-RUN sudo apt-get install -y gz-harmonic
+RUN apt-get install lsb-release wget gnupg && apt-get update
+RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+RUN apt-get update && apt-get install -y -q gz-harmonic
 
 # Install ros-gazebo dependencies
-#RUN apt update -y 
-#RUN apt-get install -y ros-humble-ros-gz
+RUN apt update && apt install ros-humble-ros-gzharmonic -y
+
+
 # Install dependencies
 RUN python3 -m pip install -U numpy
 RUN python3 -m pip install -U lightning
@@ -293,14 +287,14 @@ RUN python3 -m pip install -U natsort
 RUN mkdir -p /etc/udev/rules.d
 
 
-#RUN apt install ros-humble-plotjuggler-ros ripgrep xclip ros-humble-rqt-tf-tree -y
+RUN apt install ros-humble-plotjuggler-ros ripgrep xclip ros-humble-rqt-tf-tree -y
 
 RUN touch /root/.mybashrc
 RUN echo "source /root/.mybashrc" >> /root/.bashrc
 
 RUN export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
-RUN sudo apt install --fix-missing ros-humble-rmw-cyclonedds-cpp -y
+RUN sudo apt install ros-humble-rmw-cyclonedds-cpp -y
 RUN python3 -m pip install -U mypy
 # ENTRYPOINT ["bash", "/entrypoint.sh"]
 
