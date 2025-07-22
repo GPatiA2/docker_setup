@@ -1,6 +1,6 @@
 services:
-  aerostack2_gpu:
-    image: aerostack2_gpu
+  imav25:
+    image: imav25 
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,6 +16,8 @@ services:
       ROS_LOCALHOST_ONLY: 1
       RMW_IMPLEMENTATION: rmw_fastrtps_cpp
       WORKSPACES: $WORKSPACES
+      GZ_VERSION: harmonic
+      IGNITION_VERSION: harmonic
     runtime: nvidia
     privileged: true
     restart: always
