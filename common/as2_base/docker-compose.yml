@@ -1,10 +1,10 @@
 services:
-  imav25:
-    image: imav25 
+  aerostack2_gpu:
+    image: aerostack2_gpu
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: imav25
+    container_name: as2_dev
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: $XAUTHORITY
@@ -15,12 +15,11 @@ services:
       SHELL: $SHELL
       ROS_LOCALHOST_ONLY: 1
       RMW_IMPLEMENTATION: rmw_fastrtps_cpp
-      WORKSPACES: $WORKSPACES
-      GZ_VERSION: harmonic
-      IGNITION_VERSION: harmonic
     runtime: nvidia
     privileged: true
     restart: always
+    network_mode: "host"
+    command: tail -f /dev/null
     volumes:
       # display related 
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
@@ -31,7 +30,6 @@ services:
       - ~/.config/nvim:/root/.config/nvim:rw
       - ~/.config/coc:/root/.config/coc:rw
       - ~/.config/github-copilot:/root/.config/github-copilot:rw
-      - ~/.config/uncrustify/:/root/.config/uncrustify:rw
       - ~/.local/share/nvim/:/root/.local/share/nvim/:rw
       # tmux related
       - ~/.tmux:/root/.tmux:ro
@@ -40,11 +38,7 @@ services:
       - ~/.gitconfig:/root/.gitconfig_local
       # working dirs
       - ~/docker_setup/aerostack2_gpu/.mybashrc:/root/.mybashrc
-      - ~/project_IMAV25:/root/project_IMAV25
       # dev
       - /dev:/dev:rw
       # as2
-      - ~/aerostack2_ws:/root/aerostack2_ws/:rw
-      - ~/as2_dev_ws:/root/as2_dev_ws/:rw
-    network_mode: "host"
-    command: tail -f /dev/null
+      - ~/aerostack2_ws:/root/aerostack2_ws/
