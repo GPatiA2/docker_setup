@@ -19,6 +19,12 @@ id=${1}
 docker exec -it $id /bin/bash
 }
 
+dupex(){
+id=${1}
+dup $id
+dex $id
+}
+
 dcreate(){
 	dname=${1}
 	image=${2}
