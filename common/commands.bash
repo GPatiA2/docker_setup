@@ -32,7 +32,7 @@ dcreate(){
 	touch "${DOCKER_CFG_DIR}"/$dname/.mybashrc
 	shift
 	shift
-	python3 "${DOCKER_CFG_DIR}"/common/customize_compose.py -in "${DOCKER_CFG_DIR}"/common/as2_base/docker-compose.yml -i $image -v "$@" -n $dname
+	python3 "${DOCKER_CFG_DIR}"/common/customize_compose.py -in "${DOCKER_BASE_IMG}"/docker-compose.yml -i $image -v "$@" -n $dname
 	for volume in "$@"
 	do
 		vol_name=$(basename "$volume")

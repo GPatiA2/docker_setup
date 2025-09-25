@@ -292,6 +292,28 @@ RUN cp ~/librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/99-real
 
 RUN apt install ros-humble-plotjuggler-ros ripgrep xclip ros-humble-rqt-tf-tree -y
 
+RUN apt install ros-humble-rmw-cyclonedds-cpp -y
+
+#RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+#RUN apt update
+#RUN apt install zenoh-bridge-ros2dds -y
+
+RUN apt-get update && apt-get install -y ros-humble-rmw-cyclonedds-cpp curl
+RUN apt-get install llvm-dev libclang-dev -y
+
+WORKDIR /root
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+RUN git clone https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds.git
+WORKDIR /root/zenoh-plugin-ros2dds
+RUN cargo build --release
+ENV PATH="/root/zenoh-plugin-ros2dds/target/release:${PATH}"
+
+RUN echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> /root/.bashrc
+RUN echo 'export ROS_LOCALHOST_ONLY=1' >> /root/.bashrc
+
+RUN apt-get install -y iproute2 net-tools
 
 RUN touch /root/.mybashrc
 RUN echo "source /root/.mybashrc" >> /root/.bashrc
