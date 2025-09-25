@@ -1,0 +1,39 @@
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: tail -f /dev/null
+    container_name: insertion25
+    environment:
+      DISPLAY: $DISPLAY
+      NVIDIA_DRIVER_CAPABILITIES: all
+      NVIDIA_VISIBLE_DEVICES: all
+      RMW_IMPLEMENTATION: rmw_fastrtps_cpp
+      ROS_LOCALHOST_ONLY: 1
+      SHELL: $SHELL
+      SSH_AUTH_SOCK: $SSH_AUTH_SOCK
+      TERM: $TERM
+      XAUTHORITY: $XAUTHORITY
+    image: insertion25
+    network_mode: host
+    privileged: true
+    restart: always
+    runtime: nvidia
+    volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    - ~/.Xauthority:/root/.Xauthority:rw
+    - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+    - ~/.config/nvim:/root/.config/nvim:rw
+    - ~/.config/coc:/root/.config/coc:rw
+    - ~/.config/github-copilot:/root/.config/github-copilot:rw
+    - ~/.local/share/nvim/:/root/.local/share/nvim/:rw
+    - ~/.tmux:/root/.tmux:ro
+    - ~/.tmux.conf:/root/.tmux.conf:ro
+    - ~/.gitconfig:/root/.gitconfig_local
+    - ~/docker_setup/aerostack2_gpu/.mybashrc:/root/.mybashrc
+    - /dev:/dev:rw
+    - /home/cvar/aerostack2_ws:/root/aerostack2_ws
+    - /home/cvar/project_insertion:/root/project_insertion
+    - /home/cvar/docker_setup/insertion25/.mybashrc:/root/.mybashrc
+    - /home/cvar/as2_web_gui:/root/as2_web_gui

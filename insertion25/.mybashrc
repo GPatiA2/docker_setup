@@ -1,0 +1,2 @@
+if [ -d  /root/aerostack2_ws/install ]; then source /root/aerostack2_ws/install/setup.bash; fi
+if [ -d  /root/project_insertion/install ]; then source /root/project_insertion/install/setup.bash; fi
