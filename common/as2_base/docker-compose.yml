@@ -36,7 +36,6 @@ services:
       - ~/.tmux.conf:/root/.tmux.conf:ro
       # git
       - ~/.gitconfig:/root/.gitconfig_local
-      - ~/docker_setup/aerostack2_gpu/.mybashrc:/root/.mybashrc
       # dev
       - /dev:/dev:rw
 

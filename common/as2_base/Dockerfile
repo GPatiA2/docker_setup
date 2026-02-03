@@ -318,6 +318,9 @@ RUN apt-get install -y iproute2 net-tools
 RUN touch /root/.mybashrc
 RUN echo "source /root/.mybashrc" >> /root/.bashrc
 
+RUN sudo apt install ros-humble-plotjuggler-ros
+RUN sudo ip link set lo multicast on
+
 #COPY ./entrypoint.sh /entrypoint.sh
 #RUN chmod +x /entrypoint.sh
 #ENTRYPOINT ["bash", "/entrypoint.sh"]

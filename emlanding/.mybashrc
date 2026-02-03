@@ -1,0 +1,4 @@
+if [ -d  /root/emlanding_ws/install ]; then source /root/emlanding_ws/install/setup.bash; fi
+if [ -d  /root/aerostack2_ws/install ]; then source /root/aerostack2_ws/install/setup.bash; fi
+if [ -d  /root/as2_dev_ws/install ]; then source /root/as2_dev_ws/install/setup.bash; fi
+if [ -d  /root/kb_workspace/install ]; then source /root/kb_workspace/install/setup.bash; fi

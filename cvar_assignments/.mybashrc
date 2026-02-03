@@ -1,0 +1,1 @@
+if [ -d  /root/CVAR_Assignments/install ]; then source /root/CVAR_Assignments/install/setup.bash; fi

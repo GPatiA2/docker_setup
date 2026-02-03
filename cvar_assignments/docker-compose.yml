@@ -1,0 +1,36 @@
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: tail -f /dev/null
+    container_name: cvar_assignments
+    environment:
+      DISPLAY: $DISPLAY
+      NVIDIA_DRIVER_CAPABILITIES: all
+      NVIDIA_VISIBLE_DEVICES: all
+      RMW_IMPLEMENTATION: rmw_fastrtps_cpp
+      ROS_LOCALHOST_ONLY: 1
+      SHELL: $SHELL
+      SSH_AUTH_SOCK: $SSH_AUTH_SOCK
+      TERM: $TERM
+      XAUTHORITY: $XAUTHORITY
+    image: aerostack2_gpu
+    network_mode: host
+    privileged: true
+    restart: always
+    runtime: nvidia
+    volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    - ~/.Xauthority:/root/.Xauthority:rw
+    - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+    - ~/.config/nvim:/root/.config/nvim:rw
+    - ~/.config/coc:/root/.config/coc:rw
+    - ~/.config/github-copilot:/root/.config/github-copilot:rw
+    - ~/.local/share/nvim/:/root/.local/share/nvim/:rw
+    - ~/.tmux:/root/.tmux:ro
+    - ~/.tmux.conf:/root/.tmux.conf:ro
+    - ~/.gitconfig:/root/.gitconfig_local
+    - /dev:/dev:rw
+    - /home/cvar/CVAR_Assignments:/root/CVAR_Assignments
+    - /home/cvar/docker_setup/cvar_assignments/.mybashrc:/root/.mybashrc
