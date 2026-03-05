@@ -319,7 +319,11 @@ RUN touch /root/.mybashrc
 RUN echo "source /root/.mybashrc" >> /root/.bashrc
 
 RUN sudo apt install ros-humble-plotjuggler-ros
-RUN sudo ip link set lo multicast on
+
+RUN curl -fsSL https://claude.ai/install.sh | bash
+RUN echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+
+WORKDIR /root
 
 #COPY ./entrypoint.sh /entrypoint.sh
 #RUN chmod +x /entrypoint.sh

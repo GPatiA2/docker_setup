@@ -7,4 +7,6 @@ RUN apt update --allow-releaseinfo-change && \
         ros-humble-ament-cmake-clang-format && \
     rm -rf /var/lib/apt/lists/*
 
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 WORKDIR /root

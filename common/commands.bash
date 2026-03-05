@@ -87,6 +87,20 @@ dls(){
 	done
 }
 
+dhelp(){
+	echo "Available commands:"
+	echo "  dup    <id>              - Start a docker compose service"
+	echo "  ddown  <id>              - Stop a docker compose service"
+	echo "  dex    <id>              - Exec into a running container"
+	echo "  dupex  <id>              - Start and exec into a container"
+	echo "  dcreate <name> [--image <img>] [volumes...] - Create a new container config"
+	echo "  dls                      - List available docker configs"
+	echo "  dvol   <id>              - Show docker-compose.yml for a config"
+	echo "  dcd                      - cd to DOCKER_CFG_DIR"
+	echo "  dedit  <id>              - Edit docker-compose.yml for a config"
+	echo "  dhelp                    - Show this help message"
+}
+
 dvol(){
 	cat "${DOCKER_CFG_DIR}/${1}/docker-compose.yml"
 }
@@ -125,3 +139,6 @@ _dbasic_completion() {
 complete -F _dbasic_completion dup
 complete -F _dbasic_completion dupex
 complete -F _dbasic_completion ddown
+complete -F _dbasic_completion dex
+complete -F _dbasic_completion dvol
+complete -F _dbasic_completion dedit
