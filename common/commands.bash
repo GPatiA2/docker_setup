@@ -76,6 +76,8 @@ dcreate(){
         vol_path="/root/$vol_name"
         echo "if [ -d $vol_path/install ]; then source $vol_path/install/setup.bash; fi" >> "${DOCKER_CFG_DIR}/$dname/.mybashrc"
     done
+
+    cat ${DOCKER_CFG_DIR}/common/colcon_commands.bash >> ${DOCKER_CFG_DIR}/$dname/.mybashrc
 }
 
 dls(){

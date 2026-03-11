@@ -34,9 +34,8 @@ services:
     - ~/.gitconfig:/root/.gitconfig_local
     - /dev:/dev:rw
     - ~/emlanding_ws:/root/emlanding_ws
-    - ~/aerostack2_ws:/root/aerostack2_ws
-    - ~/coresense_dev_ws/:/root/coresense_dev_ws:rw
-    - ~/emlanding_ws/src/as2_ca/as2_ca:/root/coresense_dev_ws/src/as2_ca:rw
+    - ~/as2_dev_ws:/root/aerostack2_ws
+    - ~/project_coresense:/root/project_coresense:rw 
     - ~/docker_setup/emlanding/.mybashrc:/root/.mybashrc
     - ~/.claude:/root/.claude
     - ~/.claude.json:/root/.claude.json
