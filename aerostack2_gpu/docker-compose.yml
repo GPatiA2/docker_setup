@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: as2_gpu
+    container_name: aerostack2_gpu
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: $XAUTHORITY

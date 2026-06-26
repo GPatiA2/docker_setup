@@ -1,0 +1,12 @@
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: tail -f /dev/null
+    container_name: emlanding
+    image: emlanding 
+    volumes:
+      - type: bind
+        source: /usr/share/ollama/.ollama
+        target: /root/.ollama

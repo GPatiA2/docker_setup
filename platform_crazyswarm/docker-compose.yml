@@ -4,9 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     command: tail -f /dev/null
-    container_name: emlanding
+    container_name: platform_crazyswarm
     environment:
-      ANTHROPIC_API_KEY: $ANTHROPIC_API_KEY
       DISPLAY: $DISPLAY
       NVIDIA_DRIVER_CAPABILITIES: all
       NVIDIA_VISIBLE_DEVICES: all
@@ -16,44 +15,26 @@ services:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
       TERM: $TERM
       XAUTHORITY: $XAUTHORITY
-      OLLAMA_MODELS: /root/.ollama/models
-    image: emlanding 
+    image: platform_crazyswarm
     network_mode: host
     privileged: true
     restart: always
     runtime: nvidia
     volumes:
-    - /usr/share/ollama/.ollama:/root/.ollama
     - /tmp/.X11-unix:/tmp/.X11-unix:rw
     - ~/.Xauthority:/root/.Xauthority:rw
     - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     - ~/.config/nvim:/root/.config/nvim:rw
     - ~/.config/coc:/root/.config/coc:rw
     - ~/.config/github-copilot:/root/.config/github-copilot:rw
-    - ~/.config/Code:/root/.config/Code:rw
     - ~/.local/share/nvim/:/root/.local/share/nvim/:rw
     - ~/.tmux:/root/.tmux:ro
     - ~/.tmux.conf:/root/.tmux.conf:ro
     - ~/.gitconfig:/root/.gitconfig_local
     - /dev:/dev:rw
-
-    # Workspaces
-    - ~/knowledge_base_ws/src/kb_msgs:/root/aerostack2_ws/src/kb_msgs:rw
-    - ~/knowledge_base_ws/src/knowledge_core:/root/aerostack2_ws/src/knowledge_core:rw
-    - ~/as2_dev_ws:/root/aerostack2_ws:rw
-    - ~/project_binpat_simulator:/root/projects/project_binpat_simulator:rw
-    - ~/docker_setup/emlanding/.mybashrc:/root/.mybashrc
-    - ~/paper_aerospace:/root/aerostack2_ws/paper_aerospace:rw
-    - ~/platforms_ws:/root/platforms_ws:rw
-
-    # Projects
-    - ~/crazyflie_ws/src/project_crazyflie:/root/projects/project_crazyswarm:rw 
-    - ~/project_coresense:/root/projects/project_coresense:rw  
-    - ~/coverage_path_planning:/root/projects/coverage_path_planning:rw
-
-    # Claude and opencode 
+    - /home/cvar/aerostack2_ws:/root/aerostack2_ws
+    - /home/cvar/crazyflie_ws:/root/crazyflie_ws
     - ~/.claude:/root/.claude
     - ~/.claude.json:/root/.claude.json
     - ~/.claude.json.backup:/root/.claude.json.backup
-    - ~/.config/opencode:/root/.config/opencode:rw
-    - ~/.local/share/opencode:/root/.local/share/opencode:rw
+    - ~/docker_setup/platform_crazyswarm/.mybashrc:/root/.mybashrc

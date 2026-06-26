@@ -251,10 +251,6 @@ RUN apt-get update
 RUN apt-get install neovim nodejs python3-pip -y
 RUN pip3 install pynvim 
 
-# this folders are for nvim
-RUN mkdir .config
-RUN mkdir .local/share -p
-
 RUN apt-get install tmux tmuxinator -y
 
 RUN apt-get install cpplint cppcheck -y
@@ -265,7 +261,7 @@ RUN apt remove ignition* -y
 RUN apt autoremove -y
 
 # Install Gazebo Harmonic
-RUN apt-get install lsb-release wget gnupg && apt-get update
+RUN apt-get install lsb-release wget gnupg && apt-get update --allow-releaseinfo-change
 RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
 RUN apt-get update && apt-get install -y -q gz-harmonic
@@ -313,7 +309,8 @@ ENV PATH="/root/zenoh-plugin-ros2dds/target/release:${PATH}"
 RUN echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> /root/.bashrc
 RUN echo 'export ROS_LOCALHOST_ONLY=1' >> /root/.bashrc
 
-RUN apt-get install -y iproute2 net-tools
+RUN apt-get install -y iproute2 net-tools sudo \
+ && ln -sf /usr/sbin/ip /usr/local/bin/ip
 
 RUN touch /root/.mybashrc
 RUN echo "source /root/.mybashrc" >> /root/.bashrc

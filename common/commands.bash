@@ -26,13 +26,31 @@ dex $id
 }
 
 dcreate(){
+    # Show help if -h flag is passed or no arguments given
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+        echo "Usage: dcreate <container_name> [--image <image_name>] [volume1 volume2 ...]"
+        echo ""
+        echo "Arguments:"
+        echo "  <container_name>     Name of the new container configuration directory"
+        echo "  --image <image_name> (Optional) Docker image to use instead of the default"
+        echo "  [volume1 volume2 ...] (Optional) Host paths to mount into the container"
+        echo ""
+        echo "Examples:"
+        echo "  dcreate my_container"
+        echo "  dcreate my_container --image ros:humble"
+        echo "  dcreate my_container /home/user/ws /home/user/data"
+        echo "  dcreate my_container --image ros:humble /home/user/ws"
+        return 0
+    fi
+
     # Check for required parameter
     if [ $# -lt 1 ]; then
         echo "Error: Container name is required"
         echo "Usage: dcreate <container_name> [--image <image_name>] [volume1 volume2 ...]"
+        echo "Run 'dcreate -h' for more information"
         return 1
     fi
-    
+
     dname="$1"
     shift
     

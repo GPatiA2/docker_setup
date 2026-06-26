@@ -1,9 +1,9 @@
-if [ -d  /root/emlanding_ws/install ]; then source /root/emlanding_ws/install/setup.bash; fi
-if [ -d  /root/as2_dev_ws/install ]; then source /root/aerostack2_ws/install/setup.bash; fi
-export PATH="$HOME/.local/bin:$PATH"
-if [ -d /root/kb_ws/install ]; then source /root/kb_ws/install/setup.bash; fi
+if [ -d /root/crazyswarm/install ]; then source /root/crazyswarm/install/setup.bash; fi
+if [ -d /root/aerostack2_ws/install ]; then source /root/aerostack2_ws/install/setup.bash; fi
+if [ -d /root/as2_platform_crazyflie/install ]; then source /root/as2_platform_crazyflie/install/setup.bash; fi
+
 if [ -d /root/optitrack_ws/install ]; then source /root/optitrack_ws/install/setup.bash; fi
-if [ -d /root/platforms_ws/install ]; then source /root/platforms_ws/install/setup.bash; fi
+if [ -d /root/crazyflie_ws/install ]; then source /root/crazyflie_ws/install/setup.bash; fi
 
 # Detect the colcon workspace root by walking up from the current directory.
 # A workspace is identified by having a 'src' subdirectory alongside at least
@@ -194,5 +194,3 @@ cclean() {
         fi
     done
 }
-alias claude-local="ollama launch claude --model kimi-k2.5:cloud"
-alias opencode-gemma="ollama launch opencode --model gemma4lctx"

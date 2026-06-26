@@ -292,6 +292,12 @@ RUN cp ~/librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/99-real
 
 RUN apt install ros-humble-plotjuggler-ros ripgrep xclip ros-humble-rqt-tf-tree -y
 
+RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | tee /etc/apt/sources.list.d/zenoh.list \
+    && apt-get update --allow-releaseinfo-change \
+    && printf '#!/bin/sh\necho "systemctl called with: $@"\nexit 0\n' > /usr/bin/systemctl && chmod +x /usr/bin/systemctl \
+    && apt-get install -y zenoh-bridge-ros2dds \
+    && rm -f /usr/bin/systemctl
+RUN apt install ros-humble-rmw-cyclonedds-cpp -y
 
 RUN touch /root/.mybashrc
 RUN echo "source /root/.mybashrc" >> /root/.bashrc
